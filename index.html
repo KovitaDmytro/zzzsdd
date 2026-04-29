@@ -8,406 +8,196 @@
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --accent: #34d399;
-  --accent2: #818cf8;
-  --gold: #fbbf24;
-  --text: #f0f0f5;
-  --muted: rgba(240,240,245,0.5);
-  --glass: rgba(255,255,255,0.07);
-  --glass-border: rgba(255,255,255,0.14);
-  --glass-hover: rgba(255,255,255,0.12);
-  --blur: blur(28px);
+  --accent: #34d399; --accent2: #818cf8; --gold: #fbbf24;
+  --text: #f0f0f5; --muted: rgba(240,240,245,0.5);
+  --glass: rgba(255,255,255,0.07); --glass-border: rgba(255,255,255,0.14);
+  --glass-hover: rgba(255,255,255,0.12); --blur: blur(28px);
 }
-
 html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; color: var(--text); min-height: 100vh; overflow-x: hidden; -webkit-font-smoothing: antialiased; background: #060612; }
+.bg { position: fixed; inset: 0; z-index: 0; background: #060612; overflow: hidden; }
+.bg-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.55; animation: drift 18s ease-in-out infinite alternate; }
+.b1 { width:700px;height:700px;background:radial-gradient(circle,#1a4a6e,transparent 70%);top:-200px;left:-150px;animation-duration:20s; }
+.b2 { width:600px;height:600px;background:radial-gradient(circle,#2d1b5e,transparent 70%);top:10%;right:-100px;animation-duration:25s;animation-delay:-5s; }
+.b3 { width:500px;height:500px;background:radial-gradient(circle,#0d3d2e,transparent 70%);bottom:5%;left:20%;animation-duration:22s;animation-delay:-10s; }
+.b4 { width:400px;height:400px;background:radial-gradient(circle,#3d1a1a,transparent 70%);bottom:20%;right:10%;animation-duration:28s;animation-delay:-8s; }
+@keyframes drift { from{transform:translate(0,0) scale(1)} to{transform:translate(40px,30px) scale(1.08)} }
 
-body {
-  font-family: 'Inter', sans-serif;
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  background: #060612;
-}
+/* HEADER */
+header { position:sticky;top:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:0 2.5rem;height:58px;background:rgba(6,6,18,0.6);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border-bottom:1px solid var(--glass-border); }
+.logo { font-family:'Unbounded',sans-serif;font-weight:900;font-size:1rem;color:var(--text);text-decoration:none;letter-spacing:-0.02em; }
+.logo-dot { color:var(--accent); }
+nav { display:flex;gap:1.5rem;align-items:center; }
+nav a { font-size:0.75rem;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;transition:color .2s; }
+nav a:hover { color:var(--text); }
+.nav-cta { background:rgba(52,211,153,0.18);border:1px solid rgba(52,211,153,0.35);color:var(--accent)!important;padding:7px 16px;border-radius:20px;font-weight:600!important;backdrop-filter:blur(10px);transition:background .2s,border-color .2s!important; }
+.nav-cta:hover { background:rgba(52,211,153,0.28)!important; }
 
-/* ── ANIMATED BACKGROUND ── */
-.bg {
-  position: fixed; inset: 0; z-index: 0;
-  background: #060612;
-  overflow: hidden;
-}
-.bg-blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.55;
-  animation: drift 18s ease-in-out infinite alternate;
-}
-.b1 { width: 700px; height: 700px; background: radial-gradient(circle, #1a4a6e, transparent 70%); top: -200px; left: -150px; animation-duration: 20s; }
-.b2 { width: 600px; height: 600px; background: radial-gradient(circle, #2d1b5e, transparent 70%); top: 10%; right: -100px; animation-duration: 25s; animation-delay: -5s; }
-.b3 { width: 500px; height: 500px; background: radial-gradient(circle, #0d3d2e, transparent 70%); bottom: 5%; left: 20%; animation-duration: 22s; animation-delay: -10s; }
-.b4 { width: 400px; height: 400px; background: radial-gradient(circle, #3d1a1a, transparent 70%); bottom: 20%; right: 10%; animation-duration: 28s; animation-delay: -8s; }
+/* LANG TOGGLE */
+.lang-toggle { display:flex;background:rgba(255,255,255,0.06);border:1px solid var(--glass-border);border-radius:20px;padding:3px;gap:2px; }
+.lang-btn { background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.06em;color:var(--muted);padding:4px 10px;border-radius:16px;transition:all .2s; }
+.lang-btn.active { background:rgba(52,211,153,0.2);color:var(--accent);border:1px solid rgba(52,211,153,0.3); }
 
-@keyframes drift {
-  from { transform: translate(0, 0) scale(1); }
-  to   { transform: translate(40px, 30px) scale(1.08); }
-}
+/* PAGE TRANSITION */
+body.lang-fade { opacity:0; transition:opacity .3s ease; }
+body.lang-show { opacity:1; transition:opacity .3s ease; }
 
-/* ── GLASS MIXIN ── */
-.glass {
-  background: var(--glass);
-  backdrop-filter: var(--blur);
-  -webkit-backdrop-filter: var(--blur);
-  border: 1px solid var(--glass-border);
-}
-
-/* ── HEADER ── */
-header {
-  position: sticky; top: 0; z-index: 200;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 0 2.5rem; height: 58px;
-  background: rgba(6,6,18,0.6);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  border-bottom: 1px solid var(--glass-border);
-}
-.logo {
-  font-family: 'Unbounded', sans-serif; font-weight: 900; font-size: 1rem;
-  color: var(--text); text-decoration: none; letter-spacing: -0.02em;
-}
-.logo-dot { color: var(--accent); }
-nav { display: flex; gap: 1.5rem; align-items: center; }
-nav a {
-  font-size: 0.75rem; font-weight: 500; color: var(--muted);
-  text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase;
-  transition: color .2s;
-}
-nav a:hover { color: var(--text); }
-.nav-cta {
-  background: rgba(52,211,153,0.18);
-  border: 1px solid rgba(52,211,153,0.35);
-  color: var(--accent) !important;
-  padding: 7px 16px; border-radius: 20px; font-weight: 600 !important;
-  backdrop-filter: blur(10px);
-  transition: background .2s, border-color .2s !important;
-}
-.nav-cta:hover { background: rgba(52,211,153,0.28) !important; }
-
-/* ── HERO ── */
-.hero {
-  position: relative; z-index: 1;
-  max-width: 1100px; margin: 0 auto;
-  padding: 7rem 2.5rem 5rem;
-  display: grid; grid-template-columns: 1fr 420px;
-  gap: 5rem; align-items: center;
-}
-.hero-tag {
-  display: inline-flex; align-items: center; gap: 7px;
-  background: rgba(52,211,153,0.1);
-  border: 1px solid rgba(52,211,153,0.25);
-  backdrop-filter: blur(10px);
-  color: var(--accent); font-size: 0.68rem; font-weight: 600;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 5px 13px; border-radius: 20px; margin-bottom: 1.6rem;
-}
-.hero-tag::before {
-  content: ''; width: 6px; height: 6px; background: var(--accent);
-  border-radius: 50%; animation: pulse 2s infinite;
-}
+/* HERO */
+.hero { position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:7rem 2.5rem 5rem;display:grid;grid-template-columns:1fr 420px;gap:5rem;align-items:center; }
+.hero-tag { display:inline-flex;align-items:center;gap:7px;background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);backdrop-filter:blur(10px);color:var(--accent);font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:5px 13px;border-radius:20px;margin-bottom:1.6rem; }
+.hero-tag::before { content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite; }
 @keyframes pulse { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(52,211,153,0.4)} 50%{opacity:.6;box-shadow:0 0 0 6px rgba(52,211,153,0)} }
+h1 { font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(2.2rem,4.5vw,3.6rem);line-height:1.06;letter-spacing:-0.04em;margin-bottom:1.4rem; }
+h1 .hi { background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.hero-sub { font-size:1rem;line-height:1.8;color:var(--muted);font-weight:300;max-width:420px;margin-bottom:2.8rem; }
+.hero-dl { display:flex;flex-direction:column;gap:8px;max-width:360px; }
+.hbtn { display:flex;align-items:center;gap:13px;padding:13px 16px;border-radius:16px;background:var(--glass);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border:1px solid var(--glass-border);text-decoration:none;color:var(--text);transition:background .22s,border-color .22s,transform .18s;position:relative;overflow:hidden; }
+.hbtn::before { content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.05) 0%,transparent 60%);pointer-events:none; }
+.hbtn:hover { background:var(--glass-hover);border-color:rgba(52,211,153,0.3);transform:translateX(5px); }
+.hbtn-ico { width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+.hbtn-ico svg { width:20px;height:20px; }
+.hbtn-info { flex:1; }
+.hbtn-os { font-weight:600;font-size:0.82rem; }
+.hbtn-sub { font-size:0.68rem;color:var(--muted);margin-top:1px; }
+.hbtn-arrow { color:var(--muted);font-size:1rem;transition:color .22s,transform .18s; }
+.hbtn:hover .hbtn-arrow { color:var(--accent);transform:translateX(3px); }
 
-h1 {
-  font-family: 'Unbounded', sans-serif; font-weight: 900;
-  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
-  line-height: 1.06; letter-spacing: -0.04em; margin-bottom: 1.4rem;
-}
-h1 .hi {
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.hero-sub {
-  font-size: 1rem; line-height: 1.8; color: var(--muted);
-  font-weight: 300; max-width: 420px; margin-bottom: 2.8rem;
-}
-
-/* ── DOWNLOAD BUTTONS ── */
-.hero-dl { display: flex; flex-direction: column; gap: 8px; max-width: 360px; }
-.hbtn {
-  display: flex; align-items: center; gap: 13px;
-  padding: 13px 16px; border-radius: 16px;
-  background: var(--glass);
-  backdrop-filter: var(--blur);
-  -webkit-backdrop-filter: var(--blur);
-  border: 1px solid var(--glass-border);
-  text-decoration: none; color: var(--text);
-  transition: background .22s, border-color .22s, transform .18s;
-  position: relative; overflow: hidden;
-}
-.hbtn::before {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 60%);
-  pointer-events: none;
-}
-.hbtn:hover { background: var(--glass-hover); border-color: rgba(52,211,153,0.3); transform: translateX(5px); }
-.hbtn-ico {
-  width: 38px; height: 38px; border-radius: 10px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-}
-.hbtn-ico svg { width: 20px; height: 20px; }
-.hbtn-info { flex: 1; }
-.hbtn-os { font-weight: 600; font-size: 0.82rem; }
-.hbtn-sub { font-size: 0.68rem; color: var(--muted); margin-top: 1px; }
-.hbtn-arrow { color: var(--muted); font-size: 1rem; transition: color .22s, transform .18s; }
-.hbtn:hover .hbtn-arrow { color: var(--accent); transform: translateX(3px); }
-
-/* ── MOCKUP ── */
-.hero-right { position: relative; }
-.badge-offline {
-  position: absolute; top: -14px; right: 14px; z-index: 3;
-  background: rgba(251,191,36,0.15);
-  border: 1px solid rgba(251,191,36,0.3);
-  backdrop-filter: blur(10px);
-  color: var(--gold);
-  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 5px 12px; border-radius: 20px;
-}
-.mockup {
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 20px; overflow: hidden;
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.04),
-              0 40px 100px rgba(0,0,0,0.5),
-              inset 0 1px 0 rgba(255,255,255,0.1);
-  animation: floatUp .8s ease .2s both;
-}
+/* MOCKUP */
+.hero-right { position:relative; }
+.badge-offline { position:absolute;top:-14px;right:14px;z-index:3;background:rgba(251,191,36,0.15);border:1px solid rgba(251,191,36,0.3);backdrop-filter:blur(10px);color:var(--gold);font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:5px 12px;border-radius:20px; }
+.mockup { background:rgba(255,255,255,0.05);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);border:1px solid rgba(255,255,255,0.12);border-radius:20px;overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,0.04),0 40px 100px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.1);animation:floatUp .8s ease .2s both; }
 @keyframes floatUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
-.m-bar {
-  background: rgba(255,255,255,0.04);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  padding: 11px 15px; display: flex; align-items: center; gap: 9px;
-}
-.dots { display: flex; gap: 5px; }
-.dot { width: 9px; height: 9px; border-radius: 50%; }
+.m-bar { background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.08);padding:11px 15px;display:flex;align-items:center;gap:9px; }
+.dots { display:flex;gap:5px; }
+.dot { width:9px;height:9px;border-radius:50%; }
 .dot.r{background:#ff5f57} .dot.y{background:#ffbd2e} .dot.g{background:#28ca40}
-.m-ttl { font-size: 0.64rem; font-weight: 600; color: rgba(255,255,255,0.3); letter-spacing: .04em; }
-.m-body { display: grid; grid-template-columns: 130px 1fr; height: 260px; }
-.m-side { background: rgba(0,0,0,0.2); border-right: 1px solid rgba(255,255,255,0.06); padding: 10px 0; }
-.sl { font-size:.55rem; text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,0.2); padding:7px 12px 3px; font-weight:600; }
-.si { padding:6px 12px; font-size:.67rem; color:rgba(255,255,255,0.4); margin:0 5px 1px; border-radius:8px; cursor:pointer; }
-.si.on { background:rgba(52,211,153,0.15); color:var(--accent); font-weight:500; border: 1px solid rgba(52,211,153,0.2); }
-.m-main { padding: 12px; }
-.m-srch {
-  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 8px; height: 26px;
-  display: flex; align-items: center; gap: 6px; padding: 0 8px; margin-bottom: 8px;
-}
-.m-srch span { font-size:.6rem; color:rgba(255,255,255,0.25); }
-.crow { display:flex; align-items:center; gap:7px; padding:5px 6px; border-radius:8px; margin-bottom:2px; cursor:pointer; transition: background .15s; }
+.m-ttl { font-size:0.64rem;font-weight:600;color:rgba(255,255,255,0.3);letter-spacing:.04em; }
+.m-body { display:grid;grid-template-columns:130px 1fr;height:260px; }
+.m-side { background:rgba(0,0,0,0.2);border-right:1px solid rgba(255,255,255,0.06);padding:10px 0; }
+.sl { font-size:.55rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.2);padding:7px 12px 3px;font-weight:600; }
+.si { padding:6px 12px;font-size:.67rem;color:rgba(255,255,255,0.4);margin:0 5px 1px;border-radius:8px;cursor:pointer; }
+.si.on { background:rgba(52,211,153,0.15);color:var(--accent);font-weight:500;border:1px solid rgba(52,211,153,0.2); }
+.m-main { padding:12px; }
+.m-srch { background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;height:26px;display:flex;align-items:center;gap:6px;padding:0 8px;margin-bottom:8px; }
+.m-srch span { font-size:.6rem;color:rgba(255,255,255,0.25); }
+.crow { display:flex;align-items:center;gap:7px;padding:5px 6px;border-radius:8px;margin-bottom:2px;cursor:pointer;transition:background .15s; }
 .crow:hover { background:rgba(255,255,255,0.04); }
-.crow.sel { background:rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.12); }
-.av { width:25px; height:25px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.56rem; font-weight:700; color:#fff; flex-shrink:0; }
-.a1{background:linear-gradient(135deg,#2a6b47,#1a4a30)}
-.a2{background:linear-gradient(135deg,#3a5c8a,#1a3a6a)}
-.a3{background:linear-gradient(135deg,#6b3a7a,#4a1a5a)}
-.a4{background:linear-gradient(135deg,#8a5a2a,#6a3a0a)}
-.cn { font-size:.66rem; font-weight:500; color:var(--text); }
-.cp { font-size:.58rem; color:var(--muted); }
+.crow.sel { background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.12); }
+.av { width:25px;height:25px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.56rem;font-weight:700;color:#fff;flex-shrink:0; }
+.a1{background:linear-gradient(135deg,#2a6b47,#1a4a30)} .a2{background:linear-gradient(135deg,#3a5c8a,#1a3a6a)}
+.a3{background:linear-gradient(135deg,#6b3a7a,#4a1a5a)} .a4{background:linear-gradient(135deg,#8a5a2a,#6a3a0a)}
+.cn { font-size:.66rem;font-weight:500;color:var(--text); }
+.cp { font-size:.58rem;color:var(--muted); }
 
-/* ── SECTION LABEL ── */
-.slbl {
-  font-size:.67rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
-  color:var(--accent); display:flex; align-items:center; gap:8px; margin-bottom:2.5rem;
-}
-.slbl::before { content:''; width:20px; height:1px; background:var(--accent); }
+/* SECTION LABEL */
+.slbl { font-size:.67rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:8px;margin-bottom:2.5rem; }
+.slbl::before { content:'';width:20px;height:1px;background:var(--accent); }
 
-/* ── FEATURES ── */
-.features { position:relative; z-index:1; padding:5rem 2.5rem; }
-.features-inner { max-width:1100px; margin:0 auto; }
-.feat-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-.feat {
-  background: var(--glass);
-  backdrop-filter: var(--blur);
-  -webkit-backdrop-filter: var(--blur);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px; padding: 1.8rem;
-  position: relative; overflow: hidden;
-  transition: background .22s, border-color .22s, transform .22s;
-}
-.feat::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-}
-.feat::after {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 50%);
-  pointer-events: none;
-}
-.feat:hover { background: var(--glass-hover); border-color: rgba(52,211,153,0.2); transform: translateY(-3px); }
-.fn { font-family:'Unbounded',sans-serif; font-size:.58rem; font-weight:700; color:var(--gold); letter-spacing:.12em; margin-bottom:.9rem; opacity:.8; }
-.ft { font-family:'Unbounded',sans-serif; font-size:.82rem; font-weight:700; margin-bottom:.5rem; line-height:1.3; }
-.fd { font-size:.79rem; color:var(--muted); line-height:1.75; font-weight:300; }
+/* FEATURES */
+.features { position:relative;z-index:1;padding:5rem 2.5rem; }
+.features-inner { max-width:1100px;margin:0 auto; }
+.feat-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:12px; }
+.feat { background:var(--glass);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border:1px solid var(--glass-border);border-radius:20px;padding:1.8rem;position:relative;overflow:hidden;transition:background .22s,border-color .22s,transform .22s; }
+.feat::before { content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent); }
+.feat::after { content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.04) 0%,transparent 50%);pointer-events:none; }
+.feat:hover { background:var(--glass-hover);border-color:rgba(52,211,153,0.2);transform:translateY(-3px); }
+.fn { font-family:'Unbounded',sans-serif;font-size:.58rem;font-weight:700;color:var(--gold);letter-spacing:.12em;margin-bottom:.9rem;opacity:.8; }
+.ft { font-family:'Unbounded',sans-serif;font-size:.82rem;font-weight:700;margin-bottom:.5rem;line-height:1.3; }
+.fd { font-size:.79rem;color:var(--muted);line-height:1.75;font-weight:300; }
 
-/* ── DOWNLOAD ── */
-.dl-wrap { position:relative; z-index:1; padding:5rem 2.5rem; }
-.dl-inner { max-width:1100px; margin:0 auto; }
-.dl-inner h2 { font-family:'Unbounded',sans-serif; font-weight:900; font-size:clamp(1.8rem,3.5vw,2.8rem); letter-spacing:-.04em; margin-bottom:.7rem; }
-.dl-inner > p { font-size:.92rem; color:var(--muted); font-weight:300; margin-bottom:3rem; }
-.dl-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-.dcard {
-  background: var(--glass);
-  backdrop-filter: var(--blur);
-  -webkit-backdrop-filter: var(--blur);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px; padding: 2rem 1.5rem;
-  text-align: center; text-decoration: none; color: var(--text);
-  display: block; transition: all .25s;
-  position: relative; overflow: hidden;
-}
-.dcard::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-}
-.dcard::after {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 50%);
-  pointer-events: none;
-}
-.dcard:hover { background: var(--glass-hover); border-color: rgba(52,211,153,0.25); transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 40px rgba(52,211,153,0.05); }
-.dci { width:54px; height:54px; margin:0 auto 1.1rem; display:flex; align-items:center; justify-content:center; position:relative; z-index:1; }
-.dci svg { width:100%; height:100%; }
-.dos { font-family:'Unbounded',sans-serif; font-size:.84rem; font-weight:700; margin-bottom:.3rem; position:relative; z-index:1; }
-.dsub { font-size:.7rem; color:var(--muted); font-weight:300; margin-bottom:1.2rem; line-height:1.65; position:relative; z-index:1; }
-.dbtn {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(52,211,153,0.15);
-  border: 1px solid rgba(52,211,153,0.3);
-  backdrop-filter: blur(10px);
-  color: var(--accent);
-  font-size: .7rem; font-weight: 700; padding: 7px 18px;
-  border-radius: 20px; transition: background .2s;
-  position: relative; z-index: 1;
-}
-.dcard:hover .dbtn { background: rgba(52,211,153,0.25); }
+/* DOWNLOAD */
+.dl-wrap { position:relative;z-index:1;padding:5rem 2.5rem; }
+.dl-inner { max-width:1100px;margin:0 auto; }
+.dl-inner h2 { font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(1.8rem,3.5vw,2.8rem);letter-spacing:-.04em;margin-bottom:.7rem; }
+.dl-inner > p { font-size:.92rem;color:var(--muted);font-weight:300;margin-bottom:3rem; }
+.dl-cards { display:grid;grid-template-columns:repeat(3,1fr);gap:14px; }
+.dcard { background:var(--glass);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border:1px solid var(--glass-border);border-radius:20px;padding:2rem 1.5rem;text-align:center;text-decoration:none;color:var(--text);display:block;transition:all .25s;position:relative;overflow:hidden; }
+.dcard::before { content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent); }
+.dcard::after { content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.05) 0%,transparent 50%);pointer-events:none; }
+.dcard:hover { background:var(--glass-hover);border-color:rgba(52,211,153,0.25);transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.3),0 0 40px rgba(52,211,153,0.05); }
+.dci { width:54px;height:54px;margin:0 auto 1.1rem;display:flex;align-items:center;justify-content:center;position:relative;z-index:1; }
+.dci svg { width:100%;height:100%; }
+.dos { font-family:'Unbounded',sans-serif;font-size:.84rem;font-weight:700;margin-bottom:.3rem;position:relative;z-index:1; }
+.dsub { font-size:.7rem;color:var(--muted);font-weight:300;margin-bottom:1.2rem;line-height:1.65;position:relative;z-index:1; }
+.dbtn { display:inline-flex;align-items:center;gap:6px;background:rgba(52,211,153,0.15);border:1px solid rgba(52,211,153,0.3);backdrop-filter:blur(10px);color:var(--accent);font-size:.7rem;font-weight:700;padding:7px 18px;border-radius:20px;transition:background .2s;position:relative;z-index:1; }
+.dcard:hover .dbtn { background:rgba(52,211,153,0.25); }
 
-/* ── STEPS ── */
-.steps-wrap {
-  position:relative; z-index:1; padding:5rem 2.5rem;
-  background: rgba(255,255,255,0.02);
-  border-top: 1px solid var(--glass-border);
-  border-bottom: 1px solid var(--glass-border);
-}
-.steps-inner { max-width:1100px; margin:0 auto; }
-.steps-inner h2 { font-family:'Unbounded',sans-serif; font-weight:900; font-size:clamp(1.5rem,3vw,2.2rem); letter-spacing:-.04em; margin-bottom:3rem; max-width:460px; }
-.steps-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; }
-.step { border-top: 1px solid var(--glass-border); padding-top:1.4rem; }
-.step-n { font-family:'Unbounded',sans-serif; font-size:2.2rem; font-weight:900; color:var(--accent); opacity:0.3; margin-bottom:.6rem; line-height:1; }
-.step-t { font-family:'Unbounded',sans-serif; font-size:.78rem; font-weight:700; margin-bottom:.5rem; }
-.step-d { font-size:.78rem; color:var(--muted); line-height:1.85; font-weight:300; }
-.step-d code { font-family:monospace; background:rgba(52,211,153,0.1); color:var(--accent); padding:2px 7px; border-radius:6px; font-size:.74rem; border: 1px solid rgba(52,211,153,0.15); }
-.step-d strong { color:var(--text); font-weight:500; }
+/* STEPS */
+.steps-wrap { position:relative;z-index:1;padding:5rem 2.5rem;background:rgba(255,255,255,0.02);border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border); }
+.steps-inner { max-width:1100px;margin:0 auto; }
+.steps-inner h2 { font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(1.5rem,3vw,2.2rem);letter-spacing:-.04em;margin-bottom:3rem;max-width:460px; }
+.steps-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:2rem; }
+.step { border-top:1px solid var(--glass-border);padding-top:1.4rem; }
+.step-n { font-family:'Unbounded',sans-serif;font-size:2.2rem;font-weight:900;color:var(--accent);opacity:0.3;margin-bottom:.6rem;line-height:1; }
+.step-t { font-family:'Unbounded',sans-serif;font-size:.78rem;font-weight:700;margin-bottom:.5rem; }
+.step-d { font-size:.78rem;color:var(--muted);line-height:1.85;font-weight:300; }
+.step-d code { font-family:monospace;background:rgba(52,211,153,0.1);color:var(--accent);padding:2px 7px;border-radius:6px;font-size:.74rem;border:1px solid rgba(52,211,153,0.15); }
+.step-d strong { color:var(--text);font-weight:500; }
 
-/* ── USAGE ── */
-.usage-wrap { position:relative; z-index:1; padding:5rem 2.5rem; }
-.usage-inner { max-width:1100px; margin:0 auto; }
-.usage-inner h2 { font-family:'Unbounded',sans-serif; font-weight:900; font-size:clamp(1.5rem,3vw,2.2rem); letter-spacing:-.04em; margin-bottom:.6rem; }
-.usage-intro { font-size:.9rem; color:var(--muted); font-weight:300; margin-bottom:3rem; }
-.ugrid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.ub {
-  background: var(--glass);
-  backdrop-filter: var(--blur);
-  -webkit-backdrop-filter: var(--blur);
-  border: 1px solid var(--glass-border);
-  border-radius: 18px; padding: 1.5rem 1.7rem;
-  transition: background .22s, border-color .22s;
-  position: relative; overflow: hidden;
-}
-.ub::after {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 50%);
-  pointer-events: none;
-}
-.ub:hover { background: var(--glass-hover); border-color: rgba(52,211,153,0.2); }
-.ubh { display:flex; align-items:center; gap:10px; margin-bottom:.9rem; position:relative; z-index:1; }
-.ubico {
-  width:32px; height:32px; border-radius:9px;
-  background: rgba(52,211,153,0.1);
-  border: 1px solid rgba(52,211,153,0.2);
-  display:flex; align-items:center; justify-content:center;
-  flex-shrink:0; color:var(--accent);
-}
-.ubico svg { width:15px; height:15px; }
-.ubt { font-family:'Unbounded',sans-serif; font-size:.78rem; font-weight:700; }
-.ubb { display:flex; flex-direction:column; gap:.45rem; position:relative; z-index:1; }
-.ubb p { font-size:.78rem; line-height:1.75; color:var(--muted); font-weight:300; }
-.ubb ul { margin:.1rem 0 .1rem 1rem; display:flex; flex-direction:column; gap:3px; }
-.ubb li { font-size:.76rem; line-height:1.65; color:var(--muted); font-weight:300; }
-.ubb strong { color:var(--text); font-weight:500; }
-.ubb code { font-family:monospace; font-size:.73rem; background:rgba(52,211,153,0.08); color:var(--accent); padding:1px 6px; border-radius:5px; border: 1px solid rgba(52,211,153,0.15); }
+/* USAGE */
+.usage-wrap { position:relative;z-index:1;padding:5rem 2.5rem; }
+.usage-inner { max-width:1100px;margin:0 auto; }
+.usage-inner h2 { font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(1.5rem,3vw,2.2rem);letter-spacing:-.04em;margin-bottom:.6rem; }
+.usage-intro { font-size:.9rem;color:var(--muted);font-weight:300;margin-bottom:3rem; }
+.ugrid { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
+.ub { background:var(--glass);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border:1px solid var(--glass-border);border-radius:18px;padding:1.5rem 1.7rem;transition:background .22s,border-color .22s;position:relative;overflow:hidden; }
+.ub::after { content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.04) 0%,transparent 50%);pointer-events:none; }
+.ub:hover { background:var(--glass-hover);border-color:rgba(52,211,153,0.2); }
+.ubh { display:flex;align-items:center;gap:10px;margin-bottom:.9rem;position:relative;z-index:1; }
+.ubico { width:32px;height:32px;border-radius:9px;background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--accent); }
+.ubico svg { width:15px;height:15px; }
+.ubt { font-family:'Unbounded',sans-serif;font-size:.78rem;font-weight:700; }
+.ubb { display:flex;flex-direction:column;gap:.45rem;position:relative;z-index:1; }
+.ubb p { font-size:.78rem;line-height:1.75;color:var(--muted);font-weight:300; }
+.ubb ul { margin:.1rem 0 .1rem 1rem;display:flex;flex-direction:column;gap:3px; }
+.ubb li { font-size:.76rem;line-height:1.65;color:var(--muted);font-weight:300; }
+.ubb strong { color:var(--text);font-weight:500; }
+.ubb code { font-family:monospace;font-size:.73rem;background:rgba(52,211,153,0.08);color:var(--accent);padding:1px 6px;border-radius:5px;border:1px solid rgba(52,211,153,0.15); }
 
-/* ── FOOTER ── */
-footer {
-  position:relative; z-index:1;
-  padding:2rem 2.5rem;
-  border-top: 1px solid var(--glass-border);
-  background: rgba(255,255,255,0.02);
-  display:flex; justify-content:space-between; align-items:center;
-}
-.flogo { font-family:'Unbounded',sans-serif; font-size:.85rem; font-weight:900; }
-.fnote { font-size:.72rem; color:var(--muted); display:flex; align-items:center; gap:6px; }
-.flock {
-  width:20px; height:20px;
-  background: rgba(52,211,153,0.15);
-  border: 1px solid rgba(52,211,153,0.25);
-  border-radius:50%; display:flex; align-items:center; justify-content:center;
-}
+/* FOOTER */
+footer { position:relative;z-index:1;padding:2rem 2.5rem;border-top:1px solid var(--glass-border);background:rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center; }
+.flogo { font-family:'Unbounded',sans-serif;font-size:.85rem;font-weight:900; }
+.fnote { font-size:.72rem;color:var(--muted);display:flex;align-items:center;gap:6px; }
+.flock { width:20px;height:20px;background:rgba(52,211,153,0.15);border:1px solid rgba(52,211,153,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center; }
 
-/* ── ANIMATION ── */
-.fi { opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease; }
-.fi.vis { opacity:1; transform:none; }
+/* ANIMATION */
+.fi { opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease; }
+.fi.vis { opacity:1;transform:none; }
 
-/* ── MOBILE ── */
+/* MOBILE */
 @media (max-width: 768px) {
-  header { padding: 0 1.2rem; }
-  nav .nav-hide { display: none; }
-  .hero { grid-template-columns:1fr; padding:3.5rem 1.2rem 2.5rem; gap:2.5rem; }
-  .hero-right { order: -1; }
-  .hero-sub { max-width:100%; }
-  .hero-dl { max-width:100%; }
-  .features { padding:3.5rem 1.2rem; }
-  .feat-grid { grid-template-columns:1fr; }
-  .dl-wrap { padding:3.5rem 1.2rem; }
-  .dl-cards { grid-template-columns:1fr; max-width:340px; margin:0 auto; }
+  header { padding:0 1.2rem; }
+  nav .nav-hide { display:none; }
+  .hero { grid-template-columns:1fr;padding:3.5rem 1.2rem 2.5rem;gap:2.5rem; }
+  .hero-right { order:-1; }
+  .hero-sub,.hero-dl { max-width:100%; }
+  .features,.dl-wrap,.usage-wrap { padding:3.5rem 1.2rem; }
+  .feat-grid,.ugrid { grid-template-columns:1fr; }
+  .dl-cards { grid-template-columns:1fr;max-width:340px;margin:0 auto; }
   .steps-wrap { padding:3.5rem 1.2rem; }
-  .steps-grid { grid-template-columns:1fr; gap:1.5rem; }
-  .usage-wrap { padding:3.5rem 1.2rem; }
-  .ugrid { grid-template-columns:1fr; }
-  footer { flex-direction:column; gap:1rem; padding:1.8rem 1.2rem; text-align:center; }
+  .steps-grid { grid-template-columns:1fr;gap:1.5rem; }
+  footer { flex-direction:column;gap:1rem;padding:1.8rem 1.2rem;text-align:center; }
 }
 </style>
 </head>
 <body>
 
 <div class="bg">
-  <div class="bg-blob b1"></div>
-  <div class="bg-blob b2"></div>
-  <div class="bg-blob b3"></div>
-  <div class="bg-blob b4"></div>
+  <div class="bg-blob b1"></div><div class="bg-blob b2"></div>
+  <div class="bg-blob b3"></div><div class="bg-blob b4"></div>
 </div>
 
 <!-- HEADER -->
 <header>
   <a class="logo" href="#">Записник<span class="logo-dot">.</span></a>
   <nav>
-    <a href="#usage" class="nav-hide">Інструкція</a>
-    <a href="#download" class="nav-cta">↓ Завантажити</a>
+    <a href="#usage" class="nav-hide" data-t="nav_guide">Інструкція</a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btnUA" onclick="setLang('ua')">UA</button>
+      <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+    </div>
+    <a href="#download" class="nav-cta" data-t="nav_download">↓ Завантажити</a>
   </nav>
 </header>
 
@@ -415,68 +205,46 @@ footer {
 <section>
   <div class="hero">
     <div>
-      <div class="hero-tag">Менеджер контактів</div>
-      <h1>Ваші контакти.<br>Тільки на <span class="hi">вашому</span><br>комп'ютері.</h1>
-      <p class="hero-sub">Локальний додаток без хмари, без реєстрації, без інтернету. Всі дані зберігаються виключно у вас.</p>
+      <div class="hero-tag" data-t="hero_tag">Менеджер контактів</div>
+      <h1 data-t="hero_h1">Ваші контакти.<br>Тільки на <span class="hi" data-t="hero_hi">вашому</span><br>комп'ютері.</h1>
+      <p class="hero-sub" data-t="hero_sub">Локальний додаток без хмари, без реєстрації, без інтернету. Всі дані зберігаються виключно у вас.</p>
       <div class="hero-dl">
         <a class="hbtn" href="Zapisnik_Windows.zip" download>
           <div class="hbtn-ico"><svg viewBox="0 0 24 24" fill="#0078d4"><rect x="2" y="2" width="9" height="9" rx="1.2"/><rect x="13" y="2" width="9" height="9" rx="1.2"/><rect x="2" y="13" width="9" height="9" rx="1.2"/><rect x="13" y="13" width="9" height="9" rx="1.2"/></svg></div>
-          <div class="hbtn-info"><div class="hbtn-os">Windows</div><div class="hbtn-sub">подвійний клік на Start.vbs</div></div>
+          <div class="hbtn-info"><div class="hbtn-os">Windows</div><div class="hbtn-sub" data-t="win_sub">подвійний клік на Start.vbs</div></div>
           <div class="hbtn-arrow">→</div>
         </a>
-        <a class="hbtn" href="Zapisnik_macOS.zip" download>
-          <div class="hbtn-ico">
-            <svg viewBox="0 0 814 1000" xmlns="http://www.w3.org/2000/svg">
-              <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-37.5-155.5-127.4C46 790.7 0 663 0 541.8c0-207.5 135.4-317.3 269-317.3 70.1 0 128.4 46.4 172.5 46.4 42.8 0 109.6-49 192.5-49 31 0 111.7 2.6 168.2 83z" fill="#e0e0e0"/>
-              <path d="M554.1 157.5c22.3-26.3 37.8-62.9 37.8-99.5 0-5.1-.4-10.3-1.3-14.4-36.1 1.4-79.1 24.1-105 53.8-20.3 23.1-39.2 59.7-39.2 96.9 0 5.6.9 11.2 1.3 13.1 2.3.4 6 .9 9.7.9 32.5 0 73.5-21.7 96.7-50.8z" fill="#e0e0e0"/>
-            </svg>
-          </div>
-          <div class="hbtn-info"><div class="hbtn-os">macOS</div><div class="hbtn-sub">подвійний клік на Start.command</div></div>
+        <a class="hbtn" href="#">
+          <div class="hbtn-ico"><svg viewBox="0 0 814 1000" xmlns="http://www.w3.org/2000/svg"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-37.5-155.5-127.4C46 790.7 0 663 0 541.8c0-207.5 135.4-317.3 269-317.3 70.1 0 128.4 46.4 172.5 46.4 42.8 0 109.6-49 192.5-49 31 0 111.7 2.6 168.2 83z" fill="#e0e0e0"/><path d="M554.1 157.5c22.3-26.3 37.8-62.9 37.8-99.5 0-5.1-.4-10.3-1.3-14.4-36.1 1.4-79.1 24.1-105 53.8-20.3 23.1-39.2 59.7-39.2 96.9 0 5.6.9 11.2 1.3 13.1 2.3.4 6 .9 9.7.9 32.5 0 73.5-21.7 96.7-50.8z" fill="#e0e0e0"/></svg></div>
+          <div class="hbtn-info"><div class="hbtn-os">macOS</div><div class="hbtn-sub" data-t="mac_sub">подвійний клік на Start.command</div></div>
           <div class="hbtn-arrow">→</div>
         </a>
         <a class="hbtn" href="Zapisnik_Linux.zip" download>
-          <div class="hbtn-ico">
-            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-              <ellipse cx="24" cy="30" rx="11" ry="13" fill="#1a1a1a"/><ellipse cx="24" cy="32" rx="7" ry="9" fill="#f5f5f5"/>
-              <ellipse cx="24" cy="13" rx="9" ry="9" fill="#1a1a1a"/><ellipse cx="24" cy="15" rx="5.5" ry="5" fill="#f5f5f5"/>
-              <circle cx="21.5" cy="13" r="1.6" fill="white"/><circle cx="26.5" cy="13" r="1.6" fill="white"/>
-              <circle cx="22" cy="13.3" r="0.85" fill="#1a1a1a"/><circle cx="27" cy="13.3" r="0.85" fill="#1a1a1a"/>
-              <ellipse cx="24" cy="17.5" rx="2.4" ry="1.3" fill="#e8a000"/>
-              <ellipse cx="19" cy="43.5" rx="3.8" ry="1.7" fill="#e8a000" transform="rotate(-15 19 43.5)"/>
-              <ellipse cx="29" cy="43.5" rx="3.8" ry="1.7" fill="#e8a000" transform="rotate(15 29 43.5)"/>
-              <ellipse cx="13.5" cy="30" rx="3.2" ry="8" fill="#1a1a1a" transform="rotate(-15 13.5 30)"/>
-              <ellipse cx="34.5" cy="30" rx="3.2" ry="8" fill="#1a1a1a" transform="rotate(15 34.5 30)"/>
-            </svg>
-          </div>
-          <div class="hbtn-info"><div class="hbtn-os">Linux</div><div class="hbtn-sub">подвійний клік на Start.sh</div></div>
+          <div class="hbtn-ico"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><ellipse cx="24" cy="30" rx="11" ry="13" fill="#2d2d2d"/><ellipse cx="24" cy="32" rx="7" ry="9" fill="#f0f0f0"/><ellipse cx="24" cy="13" rx="9" ry="9" fill="#2d2d2d"/><ellipse cx="24" cy="15" rx="5.5" ry="5" fill="#f0f0f0"/><circle cx="21.5" cy="13" r="1.6" fill="white"/><circle cx="26.5" cy="13" r="1.6" fill="white"/><circle cx="22" cy="13.3" r="0.85" fill="#1a1a1a"/><circle cx="27" cy="13.3" r="0.85" fill="#1a1a1a"/><ellipse cx="24" cy="17.5" rx="2.4" ry="1.3" fill="#e8a000"/><ellipse cx="19" cy="43.5" rx="3.8" ry="1.7" fill="#e8a000" transform="rotate(-15 19 43.5)"/><ellipse cx="29" cy="43.5" rx="3.8" ry="1.7" fill="#e8a000" transform="rotate(15 29 43.5)"/><ellipse cx="13.5" cy="30" rx="3.2" ry="8" fill="#2d2d2d" transform="rotate(-15 13.5 30)"/><ellipse cx="34.5" cy="30" rx="3.2" ry="8" fill="#2d2d2d" transform="rotate(15 34.5 30)"/></svg></div>
+          <div class="hbtn-info"><div class="hbtn-os">Linux</div><div class="hbtn-sub" data-t="lin_sub">подвійний клік на Start.sh</div></div>
           <div class="hbtn-arrow">→</div>
         </a>
       </div>
     </div>
-
     <div class="hero-right">
-      <div class="badge-offline">🔒 Offline</div>
-      <div class="mockup">
-        <div class="m-bar">
-          <div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
-          <div class="m-ttl">Записник — Менеджер контактів</div>
-        </div>
+      <div class="badge-offline" data-t="offline_badge">🔒 Offline</div>
+
+      <!-- MOCKUP 1: список контактів -->
+      <div class="mockup" style="margin-bottom:14px;">
+        <div class="m-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><div class="m-ttl" data-t="mockup_title">Записник — Менеджер контактів</div></div>
         <div class="m-body">
           <div class="m-side">
-            <div class="sl">Навігація</div>
-            <div class="si on">Всі контакти</div>
-            <div class="si">Сім'я</div>
-            <div class="si">Робота</div>
-            <div class="sl">Інструменти</div>
-            <div class="si">Імпорт</div>
-            <div class="si">Експорт</div>
-            <div class="si">Резервна копія</div>
+            <div class="sl" data-t="side_nav">Навігація</div>
+            <div class="si on" data-t="side_all">Всі контакти</div>
+            <div class="si" data-t="side_fam">Сім'я</div>
+            <div class="si" data-t="side_work">Робота</div>
+            <div class="sl" data-t="side_tools">Інструменти</div>
+            <div class="si" data-t="side_import">Імпорт</div>
+            <div class="si" data-t="side_export">Експорт</div>
+            <div class="si" data-t="side_backup">Резервна копія</div>
           </div>
           <div class="m-main">
-            <div class="m-srch">
-              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-              <span>Пошук за ім'ям, телефоном...</span>
-            </div>
+            <div class="m-srch"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><span data-t="search_ph">Пошук за ім'ям, телефоном...</span></div>
             <div class="crow sel"><div class="av a1">АК</div><div><div class="cn">Андрій Коваль</div><div class="cp">+380 67 123 45 67</div></div></div>
             <div class="crow"><div class="av a2">НБ</div><div><div class="cn">Наталія Бондар</div><div class="cp">n.bondar@gmail.com</div></div></div>
             <div class="crow"><div class="av a3">ОМ</div><div><div class="cn">Олег Мельник</div><div class="cp">+380 50 987 65 43</div></div></div>
@@ -484,6 +252,45 @@ footer {
           </div>
         </div>
       </div>
+
+      <!-- MOCKUP 2: картка контакту -->
+      <div class="mockup mockup2" style="animation-delay:.4s;">
+        <div class="m-bar"><div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div><div class="m-ttl">Андрій Коваль — деталі</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;height:160px;">
+          <!-- лівий стовпець: аватар + дії -->
+          <div style="background:rgba(0,0,0,0.2);border-right:1px solid rgba(255,255,255,0.06);padding:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;">
+            <div class="av a1" style="width:44px;height:44px;font-size:.9rem;">АК</div>
+            <div style="font-size:.68rem;font-weight:600;color:var(--text);">Андрій Коваль</div>
+            <div style="display:flex;gap:6px;">
+              <div style="background:rgba(52,211,153,0.15);border:1px solid rgba(52,211,153,0.25);border-radius:6px;padding:4px 8px;font-size:.58rem;color:var(--accent);">✏️ Редагувати</div>
+              <div style="background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.2);border-radius:6px;padding:4px 8px;font-size:.58rem;color:#f87171;">🗑</div>
+            </div>
+          </div>
+          <!-- правий стовпець: поля -->
+          <div style="padding:12px;display:flex;flex-direction:column;gap:8px;overflow:hidden;">
+            <div>
+              <div style="font-size:.52rem;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px;">Телефон</div>
+              <div style="font-size:.68rem;color:var(--accent);">+380 67 123 45 67</div>
+            </div>
+            <div>
+              <div style="font-size:.52rem;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px;">Email</div>
+              <div style="font-size:.68rem;color:var(--text);">a.koval@gmail.com</div>
+            </div>
+            <div>
+              <div style="font-size:.52rem;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px;">Посада</div>
+              <div style="font-size:.68rem;color:var(--text);">Frontend розробник</div>
+            </div>
+            <div>
+              <div style="font-size:.52rem;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px;">Група</div>
+              <div style="display:flex;gap:4px;flex-wrap:wrap;">
+                <span style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.2);border-radius:10px;padding:1px 7px;font-size:.56rem;color:var(--accent);">Робота</span>
+                <span style="background:rgba(129,140,248,0.1);border:1px solid rgba(129,140,248,0.2);border-radius:10px;padding:1px 7px;font-size:.56rem;color:var(--accent2);">Сім'я</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -491,14 +298,14 @@ footer {
 <!-- FEATURES -->
 <section class="features">
   <div class="features-inner">
-    <div class="slbl fi">Можливості</div>
+    <div class="slbl fi" data-t="feat_label">Можливості</div>
     <div class="feat-grid">
-      <div class="feat fi"><div class="fn">01</div><div class="ft">Повністю офлайн</div><div class="fd">Дані у локальному SQLite-файлі. Інтернет потрібен лише для завантаження.</div></div>
-      <div class="feat fi"><div class="fn">02</div><div class="ft">Довільні поля</div><div class="fd">Додавайте будь-які власні поля — посада, адреса, нотатки, статус.</div></div>
-      <div class="feat fi"><div class="fn">03</div><div class="ft">Імпорт та Експорт</div><div class="fd">vCard (.vcf) та XML. Імпорт з телефону, експорт для резервної копії.</div></div>
-      <div class="feat fi"><div class="fn">04</div><div class="ft">Групи контактів</div><div class="fd">Сім'я, Робота, Клієнти. Фільтрація та перегляд по групах.</div></div>
-      <div class="feat fi"><div class="fn">05</div><div class="ft">UA / EN інтерфейс</div><div class="fd">Перемикайте мову в один клік без перезавантаження сторінки.</div></div>
-      <div class="feat fi"><div class="fn">06</div><div class="ft">Темна та світла тема</div><div class="fd">Комфортна робота вдень і вночі. Зберігається між сесіями.</div></div>
+      <div class="feat fi"><div class="fn">01</div><div class="ft" data-t="f1t">Повністю офлайн</div><div class="fd" data-t="f1d">Дані у локальному SQLite-файлі. Інтернет потрібен лише для завантаження.</div></div>
+      <div class="feat fi"><div class="fn">02</div><div class="ft" data-t="f2t">Довільні поля</div><div class="fd" data-t="f2d">Додавайте будь-які власні поля — посада, адреса, нотатки, статус.</div></div>
+      <div class="feat fi"><div class="fn">03</div><div class="ft" data-t="f3t">Імпорт та Експорт</div><div class="fd" data-t="f3d">vCard (.vcf) та XML. Імпорт з телефону, експорт для резервної копії.</div></div>
+      <div class="feat fi"><div class="fn">04</div><div class="ft" data-t="f4t">Групи контактів</div><div class="fd" data-t="f4d">Сім'я, Робота, Клієнти. Фільтрація та перегляд по групах.</div></div>
+      <div class="feat fi"><div class="fn">05</div><div class="ft" data-t="f5t">UA / EN інтерфейс</div><div class="fd" data-t="f5d">Перемикайте мову в один клік без перезавантаження сторінки.</div></div>
+      <div class="feat fi"><div class="fn">06</div><div class="ft" data-t="f6t">Темна та світла тема</div><div class="fd" data-t="f6d">Комфортна робота вдень і вночі. Зберігається між сесіями.</div></div>
     </div>
   </div>
 </section>
@@ -506,44 +313,24 @@ footer {
 <!-- DOWNLOAD -->
 <section id="download" class="dl-wrap">
   <div class="dl-inner">
-    <div class="slbl fi" style="justify-content:center;">Завантаження</div>
-    <h2 class="fi" style="text-align:center;">Обери свою платформу</h2>
-    <p class="fi" style="text-align:center;">Окремий ZIP для кожної платформи — завантаж і запускай.</p>
+    <div class="slbl fi" style="justify-content:center;" data-t="dl_label">Завантаження</div>
+    <h2 class="fi" style="text-align:center;" data-t="dl_h2">Обери свою платформу</h2>
+    <p class="fi" style="text-align:center;" data-t="dl_p">Окремий ZIP для кожної платформи — завантаж і запускай.</p>
     <div class="dl-cards">
       <a class="dcard fi" href="Zapisnik_Windows.zip" download>
         <div class="dci"><svg viewBox="0 0 24 24" fill="#0078d4"><rect x="2" y="2" width="9" height="9" rx="1.2"/><rect x="13" y="2" width="9" height="9" rx="1.2"/><rect x="2" y="13" width="9" height="9" rx="1.2"/><rect x="13" y="13" width="9" height="9" rx="1.2"/></svg></div>
-        <div class="dos">Windows</div>
-        <div class="dsub">10 / 11 · x64<br>Подвійний клік на Start.vbs</div>
-        <span class="dbtn">↓ Завантажити</span>
+        <div class="dos">Windows</div><div class="dsub" data-t="win_dsub">10 / 11 · x64<br>Подвійний клік на Start.vbs</div>
+        <span class="dbtn" data-t="dl_btn">↓ Завантажити</span>
       </a>
-      <a class="dcard fi" href="Zapisnik_macOS.zip" download>
-        <div class="dci">
-          <svg viewBox="0 0 814 1000" xmlns="http://www.w3.org/2000/svg">
-            <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-37.5-155.5-127.4C46 790.7 0 663 0 541.8c0-207.5 135.4-317.3 269-317.3 70.1 0 128.4 46.4 172.5 46.4 42.8 0 109.6-49 192.5-49 31 0 111.7 2.6 168.2 83z" fill="#e0e0e0"/>
-            <path d="M554.1 157.5c22.3-26.3 37.8-62.9 37.8-99.5 0-5.1-.4-10.3-1.3-14.4-36.1 1.4-79.1 24.1-105 53.8-20.3 23.1-39.2 59.7-39.2 96.9 0 5.6.9 11.2 1.3 13.1 2.3.4 6 .9 9.7.9 32.5 0 73.5-21.7 96.7-50.8z" fill="#e0e0e0"/>
-          </svg>
-        </div>
-        <div class="dos">macOS</div>
-        <div class="dsub">12+ · Intel & Apple Silicon<br>Подвійний клік на Start.command</div>
-        <span class="dbtn">↓ Завантажити</span>
+      <a class="dcard fi" href="#" onclick="return false;" style="opacity:0.55;cursor:default;">
+        <div class="dci"><svg viewBox="0 0 814 1000" xmlns="http://www.w3.org/2000/svg"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-37.5-155.5-127.4C46 790.7 0 663 0 541.8c0-207.5 135.4-317.3 269-317.3 70.1 0 128.4 46.4 172.5 46.4 42.8 0 109.6-49 192.5-49 31 0 111.7 2.6 168.2 83z" fill="#e0e0e0"/><path d="M554.1 157.5c22.3-26.3 37.8-62.9 37.8-99.5 0-5.1-.4-10.3-1.3-14.4-36.1 1.4-79.1 24.1-105 53.8-20.3 23.1-39.2 59.7-39.2 96.9 0 5.6.9 11.2 1.3 13.1 2.3.4 6 .9 9.7.9 32.5 0 73.5-21.7 96.7-50.8z" fill="#e0e0e0"/></svg></div>
+        <div class="dos">macOS</div><div class="dsub" data-t="mac_dsub">12+ · Intel & Apple Silicon<br>Подвійний клік на Start.command</div>
+        <span class="dbtn" data-t="mac_btn" style="background:rgba(251,191,36,0.15);border-color:rgba(251,191,36,0.3);color:#fbbf24;">⏳ В процесі</span>
       </a>
       <a class="dcard fi" href="Zapisnik_Linux.zip" download>
-        <div class="dci">
-          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="24" cy="30" rx="11" ry="13" fill="#1a1a1a"/><ellipse cx="24" cy="32" rx="7" ry="9" fill="#f5f5f5"/>
-            <ellipse cx="24" cy="13" rx="9" ry="9" fill="#1a1a1a"/><ellipse cx="24" cy="15" rx="5.5" ry="5" fill="#f5f5f5"/>
-            <circle cx="21.5" cy="13" r="1.6" fill="white"/><circle cx="26.5" cy="13" r="1.6" fill="white"/>
-            <circle cx="22" cy="13.3" r="0.85" fill="#1a1a1a"/><circle cx="27" cy="13.3" r="0.85" fill="#1a1a1a"/>
-            <ellipse cx="24" cy="17.5" rx="2.4" ry="1.3" fill="#e8a000"/>
-            <ellipse cx="19" cy="43.5" rx="3.8" ry="1.7" fill="#e8a000" transform="rotate(-15 19 43.5)"/>
-            <ellipse cx="29" cy="43.5" rx="3.8" ry="1.7" fill="#e8a000" transform="rotate(15 29 43.5)"/>
-            <ellipse cx="13.5" cy="30" rx="3.2" ry="8" fill="#1a1a1a" transform="rotate(-15 13.5 30)"/>
-            <ellipse cx="34.5" cy="30" rx="3.2" ry="8" fill="#1a1a1a" transform="rotate(15 34.5 30)"/>
-          </svg>
-        </div>
-        <div class="dos">Linux</div>
-        <div class="dsub">Ubuntu / Debian / Fedora<br>Подвійний клік на Start.sh</div>
-        <span class="dbtn">↓ Завантажити</span>
+        <div class="dci"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><ellipse cx="24" cy="30" rx="11" ry="13" fill="#2d2d2d"/><ellipse cx="24" cy="32" rx="7" ry="9" fill="#f0f0f0"/><ellipse cx="24" cy="13" rx="9" ry="9" fill="#2d2d2d"/><ellipse cx="24" cy="15" rx="5.5" ry="5" fill="#f0f0f0"/><circle cx="21.5" cy="13" r="1.6" fill="white"/><circle cx="26.5" cy="13" r="1.6" fill="white"/><circle cx="22" cy="13.3" r="0.85" fill="#1a1a1a"/><circle cx="27" cy="13.3" r="0.85" fill="#1a1a1a"/><ellipse cx="24" cy="17.5" rx="2.4" ry="1.3" fill="#e8a000"/><ellipse cx="19" cy="43.5" rx="3.8" ry="1.7" fill="#e8a000" transform="rotate(-15 19 43.5)"/><ellipse cx="29" cy="43.5" rx="3.8" ry="1.7" fill="#e8a000" transform="rotate(15 29 43.5)"/><ellipse cx="13.5" cy="30" rx="3.2" ry="8" fill="#2d2d2d" transform="rotate(-15 13.5 30)"/><ellipse cx="34.5" cy="30" rx="3.2" ry="8" fill="#2d2d2d" transform="rotate(15 34.5 30)"/></svg></div>
+        <div class="dos">Linux</div><div class="dsub" data-t="lin_dsub">Ubuntu / Debian / Fedora<br>Подвійний клік на Start.sh</div>
+        <span class="dbtn" data-t="dl_btn">↓ Завантажити</span>
       </a>
     </div>
   </div>
@@ -552,27 +339,19 @@ footer {
 <!-- STEPS -->
 <section class="steps-wrap">
   <div class="steps-inner">
-    <div class="slbl fi">Запуск</div>
-    <h2 class="fi">Три кроки до старту</h2>
+    <div class="slbl fi" data-t="steps_label">Запуск</div>
+    <h2 class="fi" data-t="steps_h2">Три кроки до старту</h2>
     <div class="steps-grid">
-      <div class="step fi">
-        <div class="step-n">01</div>
-        <div class="step-t">Завантажте архів</div>
-        <div class="step-d">Оберіть свою платформу вище і збережіть ZIP у зручне місце.</div>
-      </div>
-      <div class="step fi">
-        <div class="step-n">02</div>
-        <div class="step-t">Розпакуйте</div>
-        <div class="step-d">Розархівуйте ZIP у зручну папку.</div>
-      </div>
+      <div class="step fi"><div class="step-n">01</div><div class="step-t" data-t="s1t">Завантажте архів</div><div class="step-d" data-t="s1d">Оберіть свою платформу вище і збережіть ZIP у зручне місце.</div></div>
+      <div class="step fi"><div class="step-n">02</div><div class="step-t" data-t="s2t">Розпакуйте</div><div class="step-d" data-t="s2d">Розархівуйте ZIP у зручну папку.</div></div>
       <div class="step fi">
         <div class="step-n">03</div>
-        <div class="step-t">Запустіть</div>
+        <div class="step-t" data-t="s3t">Запустіть</div>
         <div class="step-d">
           <strong>Windows:</strong> <code>Start.vbs</code><br>
           <strong>macOS:</strong> <code>Start.command</code><br>
           <strong>Linux:</strong> <code>Start.sh</code><br><br>
-          Браузер відкриється автоматично.
+          <span data-t="s3auto">Браузер відкриється автоматично.</span>
         </div>
       </div>
     </div>
@@ -582,61 +361,41 @@ footer {
 <!-- USAGE -->
 <section id="usage" class="usage-wrap">
   <div class="usage-inner">
-    <div class="slbl fi">Інструкція</div>
-    <h2 class="fi">Як користуватись Записником</h2>
-    <p class="usage-intro fi">Повний опис усіх функцій — від додавання контакту до резервного копіювання.</p>
+    <div class="slbl fi" data-t="usage_label">Інструкція</div>
+    <h2 class="fi" data-t="usage_h2">Як користуватись Записником</h2>
+    <p class="usage-intro fi" data-t="usage_intro">Повний опис усіх функцій — від додавання контакту до резервного копіювання.</p>
     <div class="ugrid">
       <div class="ub fi">
-        <div class="ubh"><div class="ubico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div><div class="ubt">Додавання контакту</div></div>
-        <div class="ubb">
-          <p>Натисніть <strong>«+ Новий контакт»</strong>. Заповніть поля:</p>
-          <ul><li><strong>Ім'я та прізвище</strong> — обов'язкові</li><li><strong>Телефони</strong> — кілька з типами</li><li><strong>Email</strong> — кілька, з типами</li><li><strong>Довільні поля</strong> — будь-яка назва і значення</li></ul>
-        </div>
+        <div class="ubh"><div class="ubico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div><div class="ubt" data-t="u1t">Додавання контакту</div></div>
+        <div class="ubb"><p data-t="u1p">Натисніть <strong>«+ Новий контакт»</strong>. Заповніть поля:</p><ul><li data-t="u1l1"><strong>Ім'я та прізвище</strong> — обов'язкові</li><li data-t="u1l2"><strong>Телефони</strong> — кілька з типами</li><li data-t="u1l3"><strong>Email</strong> — кілька, з типами</li><li data-t="u1l4"><strong>Довільні поля</strong> — будь-яка назва і значення</li></ul></div>
       </div>
       <div class="ub fi">
-        <div class="ubh"><div class="ubico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div><div class="ubt">Пошук та фільтрація</div></div>
-        <div class="ubb">
-          <p>Рядок пошуку шукає по імені, телефону, email та будь-якому полю одночасно.</p>
-          <p>Оберіть групу в панелі щоб фільтрувати. «Всі контакти» — скидає фільтр.</p>
-        </div>
+        <div class="ubh"><div class="ubico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div><div class="ubt" data-t="u2t">Пошук та фільтрація</div></div>
+        <div class="ubb"><p data-t="u2p1">Рядок пошуку шукає по імені, телефону, email та будь-якому полю одночасно.</p><p data-t="u2p2">Оберіть групу в панелі щоб фільтрувати. «Всі контакти» — скидає фільтр.</p></div>
       </div>
       <div class="ub fi">
-        <div class="ubh"><div class="ubico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg></div><div class="ubt">Редагування та видалення</div></div>
-        <div class="ubb">
-          <p>Клікніть на контакт — відкриється картка. <strong>«Редагувати»</strong> для змін, <strong>«Видалити»</strong> — видаляє разом з усіма даними.</p>
-        </div>
+        <div class="ubh"><div class="ubico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg></div><div class="ubt" data-t="u3t">Редагування та видалення</div></div>
+        <div class="ubb"><p data-t="u3p">Клікніть на контакт — відкриється картка. <strong>«Редагувати»</strong> для змін, <strong>«Видалити»</strong> — видаляє разом з усіма даними.</p></div>
       </div>
       <div class="ub fi">
-        <div class="ubh"><div class="ubico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h7M17.5 14v7"/></svg></div><div class="ubt">Групи контактів</div></div>
-        <div class="ubb">
-          <p>«<strong>+</strong>» поряд з «Групи» — створює нову групу. Один контакт може бути у кількох групах одночасно.</p>
-        </div>
+        <div class="ubh"><div class="ubico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h7M17.5 14v7"/></svg></div><div class="ubt" data-t="u4t">Групи контактів</div></div>
+        <div class="ubb"><p data-t="u4p">«<strong>+</strong>» поряд з «Групи» — створює нову групу. Один контакт може бути у кількох групах одночасно.</p></div>
       </div>
       <div class="ub fi">
-        <div class="ubh"><div class="ubico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div><div class="ubt">Імпорт контактів</div></div>
-        <div class="ubb">
-          <p>«Імпорт» у панелі. Підтримує <strong>vCard (.vcf)</strong> з телефону та <strong>XML</strong> для обміну між Записниками.</p>
-        </div>
+        <div class="ubh"><div class="ubico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div><div class="ubt" data-t="u5t">Імпорт контактів</div></div>
+        <div class="ubb"><p data-t="u5p">«Імпорт» у панелі. Підтримує <strong>vCard (.vcf)</strong> з телефону та <strong>XML</strong> для обміну між Записниками.</p></div>
       </div>
       <div class="ub fi">
-        <div class="ubh"><div class="ubico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div><div class="ubt">Експорт та резервна копія</div></div>
-        <div class="ubb">
-          <p>«Експорт» → <strong>vCard</strong> або <strong>XML</strong>. «Резервна копія» → завантажить <code>contacts.db</code>.</p>
-        </div>
+        <div class="ubh"><div class="ubico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div><div class="ubt" data-t="u6t">Експорт та резервна копія</div></div>
+        <div class="ubb"><p data-t="u6p">«Експорт» → <strong>vCard</strong> або <strong>XML</strong>. «Резервна копія» → завантажить <code>contacts.db</code>.</p></div>
       </div>
       <div class="ub fi">
-        <div class="ubh"><div class="ubico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div><div class="ubt">Тема та мова</div></div>
-        <div class="ubb">
-          <ul><li><strong>🌙 / ☀️</strong> — темна/світла тема, зберігається після закриття</li><li><strong>UA / EN</strong> — мова, перемикається миттєво</li></ul>
-          <p>База зберігається автоматично кожні <strong>5 секунд</strong>.</p>
-        </div>
+        <div class="ubh"><div class="ubico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div><div class="ubt" data-t="u7t">Тема та мова</div></div>
+        <div class="ubb"><ul><li data-t="u7l1"><strong>🌙 / ☀️</strong> — темна/світла тема, зберігається після закриття</li><li data-t="u7l2"><strong>UA / EN</strong> — мова, перемикається миттєво</li></ul><p data-t="u7p">База зберігається автоматично кожні <strong>5 секунд</strong>.</p></div>
       </div>
       <div class="ub fi">
-        <div class="ubh"><div class="ubico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="ubt">Приватність</div></div>
-        <div class="ubb">
-          <p>Жодних даних в інтернет. Всі контакти — у <code>contacts.db</code> виключно на вашому комп'ютері.</p>
-          <p>Щоб перенести — скопіюйте папку або скористайтесь XML-експортом.</p>
-        </div>
+        <div class="ubh"><div class="ubico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="ubt" data-t="u8t">Приватність</div></div>
+        <div class="ubb"><p data-t="u8p1">Жодних даних в інтернет. Всі контакти — у <code>contacts.db</code> виключно на вашому комп'ютері.</p><p data-t="u8p2">Щоб перенести — скопіюйте папку або скористайтесь XML-експортом.</p></div>
       </div>
     </div>
   </div>
@@ -647,20 +406,168 @@ footer {
   <div class="flogo">Записник<span class="logo-dot">.</span></div>
   <div class="fnote">
     <span class="flock"><svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="rgba(52,211,153,0.8)" stroke-width="3"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
-    Дані зберігаються лише на вашому комп'ютері
+    <span data-t="footer_note">Дані зберігаються лише на вашому комп'ютері</span>
   </div>
 </footer>
 
 <script>
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('vis'), i * 60);
-        obs.unobserve(e.target);
+// ── TRANSLATIONS ──
+const T = {
+  ua: {
+    nav_guide: 'Інструкція', nav_download: '↓ Завантажити',
+    hero_tag: 'Менеджер контактів',
+    hero_h1: 'Ваші контакти.<br>Тільки на <span class="hi">вашому</span><br>комп\'ютері.',
+    hero_hi: 'вашому',
+    hero_sub: 'Локальний додаток без хмари, без реєстрації, без інтернету. Всі дані зберігаються виключно у вас.',
+    win_sub: 'подвійний клік на Start.vbs',
+    mac_sub: 'подвійний клік на Start.command',
+    lin_sub: 'подвійний клік на Start.sh',
+    offline_badge: '🔒 Offline',
+    mockup_title: 'Записник — Менеджер контактів',
+    side_nav: 'Навігація', side_all: 'Всі контакти', side_fam: 'Сім\'я', side_work: 'Робота',
+    side_tools: 'Інструменти', side_import: 'Імпорт', side_export: 'Експорт', side_backup: 'Резервна копія',
+    search_ph: 'Пошук за ім\'ям, телефоном...',
+    feat_label: 'Можливості',
+    f1t:'Повністю офлайн', f1d:'Дані у локальному SQLite-файлі. Інтернет потрібен лише для завантаження.',
+    f2t:'Довільні поля', f2d:'Додавайте будь-які власні поля — посада, адреса, нотатки, статус.',
+    f3t:'Імпорт та Експорт', f3d:'vCard (.vcf) та XML. Імпорт з телефону, експорт для резервної копії.',
+    f4t:'Групи контактів', f4d:'Сім\'я, Робота, Клієнти. Фільтрація та перегляд по групах.',
+    f5t:'UA / EN інтерфейс', f5d:'Перемикайте мову в один клік без перезавантаження сторінки.',
+    f6t:'Темна та світла тема', f6d:'Комфортна робота вдень і вночі. Зберігається між сесіями.',
+    dl_label:'Завантаження', dl_h2:'Обери свою платформу', dl_p:'Окремий ZIP для кожної платформи — завантаж і запускай.',
+    win_dsub:'10 / 11 · x64<br>Подвійний клік на Start.vbs',
+    mac_dsub:"12+ · Intel & Apple Silicon<br>Подвійний клік на Start.command",
+    lin_dsub:'Ubuntu / Debian / Fedora<br>Подвійний клік на Start.sh',
+    dl_btn:'↓ Завантажити',
+    mac_btn:'⏳ В процесі',
+    steps_label:'Запуск', steps_h2:'Три кроки до старту',
+    s1t:'Завантажте архів', s1d:'Оберіть свою платформу вище і збережіть ZIP у зручне місце.',
+    s2t:'Розпакуйте', s2d:'Розархівуйте ZIP у зручну папку.',
+    s3t:'Запустіть', s3auto:'Браузер відкриється автоматично.',
+    usage_label:'Інструкція', usage_h2:'Як користуватись Записником',
+    usage_intro:'Повний опис усіх функцій — від додавання контакту до резервного копіювання.',
+    u1t:'Додавання контакту', u1p:'Натисніть <strong>«+ Новий контакт»</strong>. Заповніть поля:',
+    u1l1:'<strong>Ім\'я та прізвище</strong> — обов\'язкові', u1l2:'<strong>Телефони</strong> — кілька з типами',
+    u1l3:'<strong>Email</strong> — кілька, з типами', u1l4:'<strong>Довільні поля</strong> — будь-яка назва і значення',
+    u2t:'Пошук та фільтрація',
+    u2p1:'Рядок пошуку шукає по імені, телефону, email та будь-якому полю одночасно.',
+    u2p2:'Оберіть групу в панелі щоб фільтрувати. «Всі контакти» — скидає фільтр.',
+    u3t:'Редагування та видалення',
+    u3p:'Клікніть на контакт — відкриється картка. <strong>«Редагувати»</strong> для змін, <strong>«Видалити»</strong> — видаляє разом з усіма даними.',
+    u4t:'Групи контактів',
+    u4p:'«<strong>+</strong>» поряд з «Групи» — створює нову групу. Один контакт може бути у кількох групах одночасно.',
+    u5t:'Імпорт контактів',
+    u5p:'«Імпорт» у панелі. Підтримує <strong>vCard (.vcf)</strong> з телефону та <strong>XML</strong> для обміну між Записниками.',
+    u6t:'Експорт та резервна копія',
+    u6p:'«Експорт» → <strong>vCard</strong> або <strong>XML</strong>. «Резервна копія» → завантажить <code>contacts.db</code>.',
+    u7t:'Тема та мова',
+    u7l1:'<strong>🌙 / ☀️</strong> — темна/світла тема, зберігається після закриття',
+    u7l2:'<strong>UA / EN</strong> — мова, перемикається миттєво',
+    u7p:'База зберігається автоматично кожні <strong>5 секунд</strong>.',
+    u8t:'Приватність',
+    u8p1:'Жодних даних в інтернет. Всі контакти — у <code>contacts.db</code> виключно на вашому комп\'ютері.',
+    u8p2:'Щоб перенести — скопіюйте папку або скористайтесь XML-експортом.',
+    footer_note:'Дані зберігаються лише на вашому комп\'ютері',
+  },
+  en: {
+    nav_guide: 'Guide', nav_download: '↓ Download',
+    hero_tag: 'Contact Manager',
+    hero_h1: 'Your contacts.<br>Only on <span class="hi">your</span><br>computer.',
+    hero_hi: 'your',
+    hero_sub: 'A local app with no cloud, no registration, no internet. All data is stored exclusively on your device.',
+    win_sub: 'double-click Start.vbs',
+    mac_sub: 'double-click Start.command',
+    lin_sub: 'double-click Start.sh',
+    offline_badge: '🔒 Offline',
+    mockup_title: 'Notebook — Contact Manager',
+    side_nav: 'Navigation', side_all: 'All contacts', side_fam: 'Family', side_work: 'Work',
+    side_tools: 'Tools', side_import: 'Import', side_export: 'Export', side_backup: 'Backup',
+    search_ph: 'Search by name, phone...',
+    feat_label: 'Features',
+    f1t:'Fully offline', f1d:'Data stored in a local SQLite file. Internet is only needed for the initial download.',
+    f2t:'Custom fields', f2d:'Add any custom fields to contacts — job title, address, notes, status.',
+    f3t:'Import & Export', f3d:'vCard (.vcf) and XML. Import from phone, export for backup.',
+    f4t:'Contact groups', f4d:'Family, Work, Clients. Filter and browse by group.',
+    f5t:'UA / EN interface', f5d:'Switch language with one click, no page reload needed.',
+    f6t:'Dark & light theme', f6d:'Comfortable work day and night. Theme is saved between sessions.',
+    dl_label:'Download', dl_h2:'Choose your platform', dl_p:'A separate ZIP for each platform — download and launch.',
+    win_dsub:'10 / 11 · x64<br>Double-click Start.vbs',
+    mac_dsub:"12+ · Intel & Apple Silicon<br>Подвійний клік на Start.command",
+    lin_dsub:'Ubuntu / Debian / Fedora<br>Double-click Start.sh',
+    dl_btn:'↓ Download',
+    mac_btn:'⏳ In progress',
+    steps_label:'Getting started', steps_h2:'Three steps to launch',
+    s1t:'Download the archive', s1d:'Choose your platform above and save the ZIP file.',
+    s2t:'Unzip', s2d:'Extract the ZIP to a convenient folder.',
+    s3t:'Launch', s3auto:'The browser will open automatically.',
+    usage_label:'Guide', usage_h2:'How to use Notebook',
+    usage_intro:'Full description of all features — from adding a contact to creating a backup.',
+    u1t:'Adding a contact', u1p:'Click <strong>"+ New contact"</strong>. Fill in the fields:',
+    u1l1:'<strong>First and last name</strong> — required', u1l2:'<strong>Phones</strong> — multiple with types',
+    u1l3:'<strong>Emails</strong> — multiple with types', u1l4:'<strong>Custom fields</strong> — any name and value',
+    u2t:'Search & filtering',
+    u2p1:'The search bar searches by name, phone, email and any custom field simultaneously.',
+    u2p2:'Select a group in the panel to filter. "All contacts" resets the filter.',
+    u3t:'Edit & delete',
+    u3p:'Click a contact to open its card. <strong>"Edit"</strong> to change data, <strong>"Delete"</strong> removes it along with all its data.',
+    u4t:'Contact groups',
+    u4p:'"<strong>+</strong>" next to "Groups" creates a new group. One contact can belong to multiple groups.',
+    u5t:'Import contacts',
+    u5p:'"Import" in the panel. Supports <strong>vCard (.vcf)</strong> from phone and <strong>XML</strong> for exchange.',
+    u6t:'Export & backup',
+    u6p:'"Export" → <strong>vCard</strong> or <strong>XML</strong>. "Backup" → downloads <code>contacts.db</code>.',
+    u7t:'Theme & language',
+    u7l1:'<strong>🌙 / ☀️</strong> — dark/light theme, saved after closing',
+    u7l2:'<strong>UA / EN</strong> — language switches instantly',
+    u7p:'Database saves automatically every <strong>5 seconds</strong>.',
+    u8t:'Privacy',
+    u8p1:'No data sent to the internet. All contacts are in <code>contacts.db</code> exclusively on your computer.',
+    u8p2:'To transfer — copy the entire folder or use XML export.',
+    footer_note:'Data is stored only on your computer',
+  }
+};
+
+let currentLang = 'ua';
+
+function setLang(lang) {
+  if (lang === currentLang) return;
+  currentLang = lang;
+
+  // fade out
+  document.body.style.opacity = '0';
+  document.body.style.transition = 'opacity 0.4s ease';
+
+  setTimeout(() => {
+    // apply translations
+    document.querySelectorAll('[data-t]').forEach(el => {
+      const key = el.getAttribute('data-t');
+      if (T[lang][key] !== undefined) {
+        el.innerHTML = T[lang][key];
       }
     });
-  }, { threshold: 0.07 });
-  document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+
+    // update title
+    document.title = lang === 'ua' ? 'Записник — менеджер контактів' : 'Notebook — Contact Manager';
+
+    // update buttons
+    document.getElementById('btnUA').classList.toggle('active', lang === 'ua');
+    document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+
+    // fade in
+    document.body.style.opacity = '1';
+  }, 400);
+}
+
+// ── SCROLL ANIMATION ──
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('vis'), i * 60);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.07 });
+document.querySelectorAll('.fi').forEach(el => obs.observe(el));
 </script>
 </body>
 </html>
